@@ -5,7 +5,7 @@ import Sentences from '../components/sentences';
 test('<Sentences />', () => {
   const sentences = ['a quick', 'brown fox', 'jumped over'];
   const { getAllByText } = render(
-    <Sentences productName="test" sentences={sentences} />,
+    <Sentences nameId="test" sentences={sentences} />,
   );
 
   sentences.forEach((sentence) => {

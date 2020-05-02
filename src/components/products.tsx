@@ -1,7 +1,9 @@
 import React from 'react';
 import ProductCard from './product-card';
 import Tags from './tags';
+import Button from './button';
 import { productTagsAsObject } from '../utils/utils';
+import { ExcludesUndefined } from '../utils/types';
 import useSelectedTags from '../hooks/useSelectedTags';
 
 export interface Product {
@@ -9,26 +11,26 @@ export interface Product {
   id: number;
   sentences: string[];
   tags: string[];
+  image: string;
+  price: string;
 }
-
-type ExcludesUndefined = <T>(x: T | undefined) => x is T;
 
 type ProductsProps = {
   products: Product[];
 };
 
 export default function Products({ products }: ProductsProps) {
-  const [allTags, selectedTags, toggleTag] = useSelectedTags(products);
+  const [tags, toggleTag, resetTagFilters] = useSelectedTags(products);
 
   const renderProducts = () =>
     products
       .map((product) => {
-        const productTags = productTagsAsObject(product.tags, allTags);
+        const productTags = productTagsAsObject(product.tags, tags.all);
         const activeProductTags = product.tags.some((tagName) =>
-          selectedTags.includes(tagName),
+          tags.selected.includes(tagName),
         );
 
-        if (activeProductTags || !selectedTags.length) {
+        if (activeProductTags || !tags.selected.length) {
           return (
             <ProductCard
               {...product}
@@ -43,10 +45,18 @@ export default function Products({ products }: ProductsProps) {
       .filter((Boolean as any) as ExcludesUndefined);
 
   return (
-    <div data-testid="product-list">
-      <h1 className="text-5xl mb-4">Products</h1>
+    <div className="my-8" data-testid="product-list">
       <div className="mb-10" data-testid="all-tags">
-        <Tags tags={allTags} onToggle={(name: string) => toggleTag(name)} />
+        <div className="mb-4 mx-auto flex justify-between items-center">
+          <h1 className="text-5xl mb-4">Products</h1>
+          <Button
+            text="Reset Filters"
+            type="info"
+            size="md"
+            onClick={resetTagFilters}
+          />
+        </div>
+        <Tags tags={tags.all} onToggle={(name: string) => toggleTag(name)} />
       </div>
       {renderProducts()}
     </div>

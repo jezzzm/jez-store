@@ -9,8 +9,10 @@ type TagComponentProps = {
 const Tag = ({ name, onToggle, selected }: TagComponentProps) => (
   <span
     className={`${
-      selected ? 'bg-gray-500' : 'bg-gray-200'
-    } inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 cursor-pointer`}
+      selected
+        ? 'bg-gray-800 text-white hover:bg-black'
+        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+    } inline-block rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 cursor-pointer transition duration-200`}
     data-testid="tag"
     onClick={() => onToggle(name)}
   >

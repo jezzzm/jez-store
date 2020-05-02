@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { TagsInterface } from '../components/tags';
 import { Product } from '../components/products';
 import { flattenAndSortTags } from '../utils/utils';
-
-type ExcludesUndefined = <T>(x: T | undefined) => x is T;
+import { ExcludesUndefined } from '../utils/types';
 
 export default function useSelectedTags(products: Product[]) {
   const flattenedTags: string[] = flattenAndSortTags(products);
@@ -14,11 +13,15 @@ export default function useSelectedTags(products: Product[]) {
 
   const [allTags, setTags] = useState(INITIAL_STATE);
 
-  const toggleTag = (name: string) => {
+  const toggleTag = (name: string): void => {
     setTags((oldTags) => ({
       ...oldTags,
       [name]: !oldTags[name],
     }));
+  };
+
+  const resetTagFilters = (): void => {
+    setTags(INITIAL_STATE);
   };
 
   const selectedTags: string[] = Object.entries(allTags)
@@ -30,5 +33,9 @@ export default function useSelectedTags(products: Product[]) {
     })
     .filter((Boolean as any) as ExcludesUndefined);
 
-  return [allTags, selectedTags, toggleTag] as const;
+  return [
+    { all: allTags, selected: selectedTags },
+    toggleTag,
+    resetTagFilters,
+  ] as const;
 }

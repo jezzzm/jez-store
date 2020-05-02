@@ -11,6 +11,8 @@ const generateDemoProducts = (numItems = 5) => {
         faker.commerce.productAdjective().toLowerCase(),
       ),
       id: faker.random.number(10000),
+      image: faker.image.avatar(),
+      price: faker.finance.amount(5, 999),
     });
   }
   return data;
