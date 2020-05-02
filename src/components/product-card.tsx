@@ -6,7 +6,9 @@ type CardProps = {
   text: string;
 };
 const CardTitle = ({ text }: CardProps) => (
-  <h2 className="font-bold text-4xl mb-4">{text}</h2>
+  <h2 className="font-bold text-4xl mb-4" data-testid="product-card-title">
+    {text}
+  </h2>
 );
 
 type ProductCardProps = {
@@ -21,9 +23,12 @@ export default function ProductCard({
   tags,
 }: ProductCardProps) {
   return (
-    <div className="max-w-lg rounded shadow-md p-4 mb-4">
+    <div
+      className="max-w-lg rounded shadow-md p-4 mb-4"
+      data-testid="product-card"
+    >
       <CardTitle text={name} />
-      <Sentences name={name} sentences={sentences} />
+      <Sentences productName={name} sentences={sentences} />
       <Tags tags={tags} />
     </div>
   );

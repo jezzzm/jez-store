@@ -10,14 +10,14 @@ const Sentence = ({ content }: SentenceProps) => (
 
 type SentencesProps = {
   sentences: string[];
-  name: string;
+  productName: string;
 };
 
-export default function Sentences({ name, sentences }: SentencesProps) {
+export default function Sentences({ productName, sentences }: SentencesProps) {
   return (
-    <div className="pb-4">
+    <div className="pb-4" data-testid="sentences">
       {sentences.map((sentence) => (
-        <Sentence key={`${name}-${sentence}`} content={sentence} />
+        <Sentence key={`${productName}-${sentence}`} content={sentence} />
       ))}
     </div>
   );

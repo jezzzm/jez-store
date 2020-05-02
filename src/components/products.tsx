@@ -16,7 +16,7 @@ export default function Products({ products }: ProductsProps) {
     <div className="m-4" data-testid="product-list">
       <h1 className="text-5xl mb-4">Products</h1>
       {products.map((product) => (
-        <ProductCard {...product} key={JSON.stringify(product)} />
+        <ProductCard {...product} key={product.name} />
       ))}
     </div>
   );
