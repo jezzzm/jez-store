@@ -43,7 +43,7 @@ export default function ProductCard({
           </div>
         </div>
         <div className="ml-8">
-          <img src={image} className="h-auto" />
+          <img src={image} className="h-auto" alt={name} title={name} />
         </div>
       </div>
 
