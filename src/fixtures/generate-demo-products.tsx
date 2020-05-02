@@ -10,6 +10,7 @@ const generateDemoProducts = (numItems = 5) => {
       tags: [...Array(numTags)].map(() =>
         faker.commerce.productAdjective().toLowerCase(),
       ),
+      id: faker.random.number(10000),
     });
   }
   return data;

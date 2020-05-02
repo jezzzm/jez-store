@@ -15,14 +15,5 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": [
-    "src",
-    "test/tags.test.tsx",
-    "test/generate-demo-products.test.tsx",
-    "test/App.test.tsx",
-    "test/setupTests.tsx",
-    "test/products.test.tsx",
-    "test/product-card.test.tsx",
-    "test/sentences.test.tsx"
-  ]
+  "include": ["src", "test"]
 }

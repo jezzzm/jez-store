@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ProductCard from './product-card';
 import Tags, { TagsInterface } from './tags';
 import { flattenAndSortTags, productTagsAsObject } from '../utils/utils';
 
 export interface Product {
   name: string;
+  id: number;
   sentences: string[];
   tags: string[];
 }
@@ -31,13 +32,14 @@ export default function Products({ products }: ProductsProps) {
     }));
   };
 
-  const filteredTags = Object.entries(tags)
+  const filteredTags: string[] = Object.entries(tags)
     .map(([tag, selected]) => {
       if (selected) {
         return tag;
       }
+      return undefined;
     })
-    .filter(Boolean);
+    .filter((Boolean as any) as ExcludesUndefined);
 
   const renderProducts = () =>
     products
@@ -52,11 +54,12 @@ export default function Products({ products }: ProductsProps) {
             <ProductCard
               {...product}
               tags={productTags}
-              key={product.name}
+              key={product.id}
               onToggle={handleToggle}
             />
           );
         }
+        return undefined;
       })
       .filter((Boolean as any) as ExcludesUndefined);
 

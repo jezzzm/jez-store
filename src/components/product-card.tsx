@@ -16,6 +16,7 @@ type ProductCardProps = {
   sentences: string[];
   tags: TagsInterface;
   onToggle: CallableFunction;
+  id: number;
 };
 
 export default function ProductCard({
@@ -23,14 +24,16 @@ export default function ProductCard({
   sentences,
   tags,
   onToggle,
+  id,
 }: ProductCardProps) {
   return (
     <div
       className="max-w-lg rounded shadow-md p-4 mb-6 mx-auto"
       data-testid="product-card"
+      data-productid={id}
     >
       <CardTitle text={name} />
-      <Sentences productName={name} sentences={sentences} />
+      <Sentences nameId={`${id}-${name}`} sentences={sentences} />
       <Tags tags={tags} onToggle={onToggle} />
     </div>
   );

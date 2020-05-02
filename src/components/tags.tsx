@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 type TagComponentProps = {
   name: string;
@@ -8,9 +8,9 @@ type TagComponentProps = {
 
 const Tag = ({ name, onToggle, selected }: TagComponentProps) => (
   <span
-    className={`inline-block ${
+    className={`${
       selected ? 'bg-gray-500' : 'bg-gray-200'
-    } rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 cursor-pointer`}
+    } inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 cursor-pointer`}
     data-testid="tag"
     onClick={() => onToggle(name)}
   >
