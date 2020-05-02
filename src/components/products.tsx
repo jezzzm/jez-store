@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ProductCard from './product-card';
-import Tags, { TagsInterface } from './tags';
-import { flattenAndSortTags, productTagsAsObject } from '../utils/utils';
+import Tags from './tags';
+import { productTagsAsObject } from '../utils/utils';
+import useSelectedTags from '../hooks/useSelectedTags';
 
 export interface Product {
   name: string;
@@ -10,52 +11,30 @@ export interface Product {
   tags: string[];
 }
 
+type ExcludesUndefined = <T>(x: T | undefined) => x is T;
+
 type ProductsProps = {
   products: Product[];
 };
 
-type ExcludesUndefined = <T>(x: T | undefined) => x is T;
-
 export default function Products({ products }: ProductsProps) {
-  const allTags: string[] = flattenAndSortTags(products);
-  const INITIAL_STATE = allTags.reduce((acc: TagsInterface, tag) => {
-    acc[tag] = false;
-    return acc;
-  }, {});
-
-  const [tags, setTags] = useState(INITIAL_STATE);
-
-  const handleToggle = (name: string) => {
-    setTags((oldTags) => ({
-      ...oldTags,
-      [name]: !oldTags[name],
-    }));
-  };
-
-  const filteredTags: string[] = Object.entries(tags)
-    .map(([tag, selected]) => {
-      if (selected) {
-        return tag;
-      }
-      return undefined;
-    })
-    .filter((Boolean as any) as ExcludesUndefined);
+  const [allTags, selectedTags, toggleTag] = useSelectedTags(products);
 
   const renderProducts = () =>
     products
       .map((product) => {
-        const productTags = productTagsAsObject(product.tags, tags);
+        const productTags = productTagsAsObject(product.tags, allTags);
         const activeProductTags = product.tags.some((tagName) =>
-          filteredTags.includes(tagName),
+          selectedTags.includes(tagName),
         );
 
-        if (activeProductTags || !filteredTags.length) {
+        if (activeProductTags || !selectedTags.length) {
           return (
             <ProductCard
               {...product}
               tags={productTags}
               key={product.id}
-              onToggle={handleToggle}
+              onToggle={(name: string) => toggleTag(name)}
             />
           );
         }
@@ -67,7 +46,7 @@ export default function Products({ products }: ProductsProps) {
     <div data-testid="product-list">
       <h1 className="text-5xl mb-4">Products</h1>
       <div className="mb-10" data-testid="all-tags">
-        <Tags tags={tags} onToggle={handleToggle} />
+        <Tags tags={allTags} onToggle={(name: string) => toggleTag(name)} />
       </div>
       {renderProducts()}
     </div>
