@@ -1,4 +1,4 @@
-import generateDemoProducts from './generate-demo-products';
+import generateDemoProducts from '../fixtures/generate-demo-products';
 
 describe('demo products generator', () => {
   it('should work for one item', () => {

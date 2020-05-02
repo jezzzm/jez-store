@@ -1,5 +1,5 @@
 import React from 'react';
-import Tags from './tags';
+import Tags, { TagsInterface } from './tags';
 import Sentences from './sentences';
 
 type CardProps = {
@@ -14,22 +14,24 @@ const CardTitle = ({ text }: CardProps) => (
 type ProductCardProps = {
   name: string;
   sentences: string[];
-  tags: string[];
+  tags: TagsInterface;
+  onToggle: CallableFunction;
 };
 
 export default function ProductCard({
   name,
   sentences,
   tags,
+  onToggle,
 }: ProductCardProps) {
   return (
     <div
-      className="max-w-lg rounded shadow-md p-4 mb-4"
+      className="max-w-lg rounded shadow-md p-4 mb-6 mx-auto"
       data-testid="product-card"
     >
       <CardTitle text={name} />
       <Sentences productName={name} sentences={sentences} />
-      <Tags tags={tags} />
+      <Tags tags={tags} onToggle={onToggle} />
     </div>
   );
 }

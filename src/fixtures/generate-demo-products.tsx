@@ -7,7 +7,9 @@ const generateDemoProducts = (numItems = 5) => {
     data.push({
       name: faker.commerce.productName(),
       sentences: faker.lorem.sentences().split('. '),
-      tags: [...Array(numTags)].map(() => faker.commerce.productAdjective()),
+      tags: [...Array(numTags)].map(() =>
+        faker.commerce.productAdjective().toLowerCase(),
+      ),
     });
   }
   return data;

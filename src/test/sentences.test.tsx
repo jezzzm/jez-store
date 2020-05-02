@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Sentences from './sentences';
+import Sentences from '../components/sentences';
 
 test('<Sentences />', () => {
   const sentences = ['a quick', 'brown fox', 'jumped over'];

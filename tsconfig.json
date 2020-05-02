@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,6 +16,13 @@
     "jsx": "react"
   },
   "include": [
-    "src"
+    "src",
+    "test/tags.test.tsx",
+    "test/generate-demo-products.test.tsx",
+    "test/App.test.tsx",
+    "test/setupTests.tsx",
+    "test/products.test.tsx",
+    "test/product-card.test.tsx",
+    "test/sentences.test.tsx"
   ]
 }

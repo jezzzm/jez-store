@@ -1,29 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-type TagProps = {
+type TagComponentProps = {
   name: string;
+  onToggle: CallableFunction;
+  selected: boolean;
 };
 
-const Tag = ({ name }: TagProps) => (
+const Tag = ({ name, onToggle, selected }: TagComponentProps) => (
   <span
-    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+    className={`inline-block ${
+      selected ? 'bg-gray-500' : 'bg-gray-200'
+    } rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 cursor-pointer`}
     data-testid="tag"
+    onClick={() => onToggle(name)}
   >
-    #{name}
+    # {name}
   </span>
 );
 
+export interface TagsInterface {
+  [key: string]: boolean;
+}
+
 type TagsProps = {
-  tags: string[];
+  tags: TagsInterface;
+  onToggle: CallableFunction;
 };
 
-export default function Tags({ tags }: TagsProps) {
-  const sortedUnique = Array.from(new Set(tags)).sort();
-
+export default function Tags({ tags, onToggle }: TagsProps) {
   return (
     <div data-testid="tags">
-      {sortedUnique.map((name, idx) => (
-        <Tag name={name} key={`tag-${name}-${idx}`} />
+      {Object.entries(tags).map(([name, selected]) => (
+        <Tag
+          name={name.toLowerCase()}
+          onToggle={onToggle}
+          selected={selected}
+          key={`tag-${name}-${selected}`}
+        />
       ))}
     </div>
   );

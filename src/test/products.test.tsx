@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Products from './products';
+import Products from '../components/products';
 import generateDemoProducts from '../fixtures/generate-demo-products';
 
 test('<Products />', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ProductCard from './product-card';
+import ProductCard from '../components/product-card';
 import generateDemoProducts from '../fixtures/generate-demo-products';
 
 describe('<ProductCard />', () => {
