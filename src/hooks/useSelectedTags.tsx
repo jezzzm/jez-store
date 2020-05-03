@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TagsInterface } from '../components/tags';
+import { TagsInterface } from '../components/common/tags';
 import { flattenAndSortTags } from '../utils/utils';
 import { ExcludesUndefined, Product } from '../utils/types';
 

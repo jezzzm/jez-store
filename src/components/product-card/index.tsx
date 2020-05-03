@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import Tags, { TagsInterface } from '../tags';
+import React from 'react';
+import Tags, { TagsInterface } from '../common/tags';
 import Description from './description';
 import Header from './header';
 import CardContainer from './card-container';

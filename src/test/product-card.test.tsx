@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import ProductCard from '../components/product-card';
 import generateDemoProducts from '../fixtures/generate-demo-products';
-import { TagsInterface } from '../components/tags';
+import { TagsInterface } from '../components/common/tags';
 
 describe('<ProductCard />', () => {
   const [product] = generateDemoProducts(1);

@@ -1,3 +1,4 @@
+// for ts to be happy when .filter(Boolean) is used to clear up .map()
 export type ExcludesUndefined = <T>(x: T | undefined) => x is T;
 
 export interface Product {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Tags from '../components/tags';
+import Tags from '../components/common/tags';
 
 describe('<Tags />', () => {
   const tags = {

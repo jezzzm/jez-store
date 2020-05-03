@@ -5,6 +5,7 @@ interface ButtonProps {
   size?: 'sm' | 'md' | 'lg';
   onClick: CallableFunction;
   text: string;
+  extraClasses?: string;
 }
 
 export default function Button({
@@ -12,49 +13,51 @@ export default function Button({
   size = 'md',
   onClick,
   text,
+  extraClasses = '',
 }: ButtonProps) {
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     onClick(event);
   };
 
-  let styleMods: string = '';
+  extraClasses += ' ';
 
   const colourMod = (colour: string) =>
     `bg-${colour}-600 hover:bg-${colour}-700 `;
+
   switch (type) {
     case 'warning':
-      styleMods += colourMod('yellow');
+      extraClasses += colourMod('yellow');
       break;
     case 'danger':
-      styleMods += colourMod('red');
+      extraClasses += colourMod('red');
       break;
     case 'info':
-      styleMods += colourMod('blue');
+      extraClasses += colourMod('blue');
       break;
     case 'success':
     default:
-      styleMods += colourMod('green');
+      extraClasses += colourMod('green');
   }
 
-  styleMods += ' ';
+  extraClasses += ' ';
 
   switch (size) {
     case 'sm':
-      styleMods += 'px-4 py-1 text-xs';
+      extraClasses += 'px-4 py-1 text-xs';
       break;
     case 'lg':
-      styleMods += 'px-8 py-3 text-md';
+      extraClasses += 'px-8 py-3 text-md';
       break;
     case 'md':
     default:
-      styleMods += 'px-6 py-2 text-sm';
+      extraClasses += 'px-6 py-2 text-sm';
   }
 
   return (
     <button
       onClick={handleClick}
-      className={`${styleMods} rounded shadow text-white font-semibold inline-block transition duration-200`}
+      className={`${extraClasses} rounded shadow text-white font-semibold inline-block transition duration-200 whitespace-no-wrap`}
     >
       {text}
     </button>

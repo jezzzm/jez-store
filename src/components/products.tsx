@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProductCard from './product-card';
-import Tags from './tags';
-import Button from './button';
+import Filters from './filters';
 import { productTagsAsObject } from '../utils/utils';
 import { ExcludesUndefined, Product } from '../utils/types';
 import useSelectedTags from '../hooks/useSelectedTags';
@@ -12,16 +11,44 @@ type ProductsProps = {
 
 export default function Products({ products }: ProductsProps) {
   const [tags, toggleTag, resetTagFilters] = useSelectedTags(products);
+  const [search, setSearch] = useState('');
+  const [price, setPrice] = useState({ min: 0, max: Infinity });
 
-  const renderProducts = () =>
-    products
+  const handleResetFilters = () => {
+    resetTagFilters();
+    setSearch('');
+  };
+
+  const handlePriceChange = (name: string, newPrice: number) => {
+    setPrice((oldPrice) => ({
+      ...oldPrice,
+      [name]: newPrice,
+    }));
+  };
+
+  const renderMatchingProducts = () => {
+    const hasSearchTermEntered = !!search.length;
+
+    return products
       .map((product) => {
-        const productTags = productTagsAsObject(product.tags, tags.all);
-        const activeProductTags = product.tags.some((tagName) =>
-          tags.selected.includes(tagName),
+        const hasSelectedTag = tags.selected.every((tagName) =>
+          product.tags.includes(tagName),
         );
 
-        if (activeProductTags || !tags.selected.length) {
+        const hasMatchingSearchTerm =
+          hasSearchTermEntered &&
+          (product.name.toLowerCase().includes(search) ||
+            product.description.toLowerCase().includes(search) ||
+            product.tags.some((tag) => tag.includes(search)));
+
+        const noTagFilterOrMatchesTag = hasSelectedTag || !tags.selected.length;
+
+        const isMatchingProduct = hasSearchTermEntered
+          ? hasMatchingSearchTerm && noTagFilterOrMatchesTag
+          : noTagFilterOrMatchesTag;
+
+        if (isMatchingProduct) {
+          const productTags = productTagsAsObject(product.tags, tags.all);
           return (
             <ProductCard
               {...product}
@@ -34,22 +61,21 @@ export default function Products({ products }: ProductsProps) {
         return undefined;
       })
       .filter((Boolean as any) as ExcludesUndefined);
+  };
 
   return (
     <div className="my-8" data-testid="product-list">
-      <div className="mb-10" data-testid="all-tags">
-        <div className="mb-4 mx-auto flex justify-between items-center">
-          <h1 className="text-5xl mb-4">Products</h1>
-          <Button
-            text="Reset Filters"
-            type="info"
-            size="md"
-            onClick={resetTagFilters}
-          />
-        </div>
-        <Tags tags={tags.all} onToggle={(name: string) => toggleTag(name)} />
-      </div>
-      {renderProducts()}
+      <h1 className="text-5xl mb-4">Products</h1>
+      <Filters
+        tags={tags.all}
+        toggleTag={toggleTag}
+        onSearchInput={setSearch}
+        searchTerm={search}
+        price={price}
+        onPriceChange={handlePriceChange}
+        resetFilters={handleResetFilters}
+      />
+      {renderMatchingProducts()}
     </div>
   );
 }
