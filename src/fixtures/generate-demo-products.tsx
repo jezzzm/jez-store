@@ -1,12 +1,14 @@
 import faker from 'faker';
+import { Product } from '../utils/types';
 
-const generateDemoProducts = (numItems = 5) => {
+const generateDemoProducts = (numItems = 5): Product[] => {
   let data = [];
   for (let i = 0; i < numItems; i++) {
     const numTags = faker.random.number({ min: 2, max: 6 });
+    const numSentences = faker.random.number({ min: 2, max: 4 });
     data.push({
       name: faker.commerce.productName(),
-      sentences: faker.lorem.sentences().split('. '),
+      description: faker.lorem.paragraph(numSentences),
       tags: [...Array(numTags)].map(() =>
         faker.commerce.productAdjective().toLowerCase(),
       ),

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { TagsInterface } from '../components/tags';
-import { Product } from '../components/products';
 import { flattenAndSortTags } from '../utils/utils';
-import { ExcludesUndefined } from '../utils/types';
+import { ExcludesUndefined, Product } from '../utils/types';
 
 export default function useSelectedTags(products: Product[]) {
   const flattenedTags: string[] = flattenAndSortTags(products);

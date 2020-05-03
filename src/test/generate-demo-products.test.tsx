@@ -5,7 +5,7 @@ describe('demo products generator', () => {
     const one = generateDemoProducts(1);
     expect(one).toHaveLength(1);
     expect(one[0]).toHaveProperty('name');
-    expect(one[0]).toHaveProperty('sentences');
+    expect(one[0]).toHaveProperty('description');
     expect(one[0]).toHaveProperty('tags');
   });
 
@@ -13,7 +13,7 @@ describe('demo products generator', () => {
     const five = generateDemoProducts(5);
     expect(five).toHaveLength(5);
     expect(five[0]).toHaveProperty('name');
-    expect(five[0]).toHaveProperty('sentences');
+    expect(five[0]).toHaveProperty('description');
     expect(five[0]).toHaveProperty('tags');
   });
 });

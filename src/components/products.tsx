@@ -3,17 +3,8 @@ import ProductCard from './product-card';
 import Tags from './tags';
 import Button from './button';
 import { productTagsAsObject } from '../utils/utils';
-import { ExcludesUndefined } from '../utils/types';
+import { ExcludesUndefined, Product } from '../utils/types';
 import useSelectedTags from '../hooks/useSelectedTags';
-
-export interface Product {
-  name: string;
-  id: number;
-  sentences: string[];
-  tags: string[];
-  image: string;
-  price: string;
-}
 
 type ProductsProps = {
   products: Product[];
