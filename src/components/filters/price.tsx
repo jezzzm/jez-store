@@ -2,8 +2,8 @@ import React, { ChangeEvent } from 'react';
 import Input from '../common/input';
 
 export type PriceRange = {
-  min: number;
-  max: number;
+  min: number | false;
+  max: number | false;
 };
 
 type PriceProps = {
@@ -12,7 +12,10 @@ type PriceProps = {
 };
 export default function Price({ price, onPriceChange }: PriceProps) {
   const handlePriceChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
+    // validation
+    // min price >= 0.01
+    // min < max
+    // max <= 999999
     onPriceChange(event.target.name, Number(event.target.value));
   };
   return (
@@ -22,7 +25,7 @@ export default function Price({ price, onPriceChange }: PriceProps) {
         label="min price"
         name="min"
         type="number"
-        value={String(price.min)}
+        value={!!price.min ? String(price.min) : ''}
         onInputChange={handlePriceChange}
         extraClasses="mr-3"
       />
@@ -31,7 +34,7 @@ export default function Price({ price, onPriceChange }: PriceProps) {
         label="max price"
         name="max"
         type="number"
-        value={String(price.max)}
+        value={!!price.max ? String(price.max) : ''}
         onInputChange={handlePriceChange}
       />
     </div>

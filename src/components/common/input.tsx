@@ -23,8 +23,7 @@ export default function Input({
 }: InputProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const newValue = event.target.value?.toLowerCase();
-    onInputChange(newValue);
+    onInputChange(event);
   };
 
   extraClasses += ' ';
