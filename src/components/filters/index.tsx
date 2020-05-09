@@ -1,8 +1,9 @@
 import React from 'react';
 import Search from './search';
 import Price, { PriceRange } from './price';
-import Tags, { TagsInterface } from '../common/tags';
+import Tags from '../common/tags';
 import Button from '../common/button';
+import { TagsInterface } from '../../utils/types';
 
 type FilterProps = {
   tags: TagsInterface;

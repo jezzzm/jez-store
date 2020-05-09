@@ -4,7 +4,7 @@ import Filters from './filters';
 import { PriceRange } from './filters/price';
 import { productTagsAsObject } from '../utils/utils';
 import { ExcludesUndefined, Product } from '../utils/types';
-import useSelectedTags from '../hooks/useSelectedTags';
+import useSelectedTags from '../hooks/use-selected-tags';
 import SearchContext from '../context/search-context';
 
 type ProductsProps = {

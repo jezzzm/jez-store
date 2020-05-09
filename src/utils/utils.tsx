@@ -1,6 +1,5 @@
 import { Product } from './types';
-import { TagsInterface } from '../components/common/tags';
-import { TextMatch } from './types';
+import { TextMatch, TagsInterface } from './types';
 
 export const flattenAndSortTags = (products: Product[]) => {
   const flattened = products.flatMap((product) => product.tags);

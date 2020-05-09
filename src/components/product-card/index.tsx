@@ -1,8 +1,9 @@
 import React from 'react';
-import Tags, { TagsInterface } from '../common/tags';
+import Tags from '../common/tags';
 import Description from './description';
 import Header from './header';
 import CardContainer from './card-container';
+import { TagsInterface } from '../../utils/types';
 
 type ProductCardProps = {
   name: string;

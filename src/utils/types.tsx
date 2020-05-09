@@ -14,3 +14,6 @@ export interface TextMatch {
   text: string;
   match: boolean;
 }
+export interface TagsInterface {
+  [key: string]: boolean;
+}
