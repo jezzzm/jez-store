@@ -10,11 +10,12 @@ export default function Search({ onSearchInput, searchTerm }: SearchProps) {
   return (
     <Input
       label="Search"
-      placeholder="Search for anything..."
+      placeholder="Search products..."
       onInputChange={(event: ChangeEvent<HTMLInputElement>) =>
         onSearchInput(event.target.value.toLowerCase())
       }
       value={searchTerm}
+      ariaLabel="Product Keyword Search"
     />
   );
 }

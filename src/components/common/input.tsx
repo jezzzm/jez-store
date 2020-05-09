@@ -9,6 +9,8 @@ type InputProps = {
   size?: 'sm' | 'md' | 'lg';
   extraClasses?: string;
   name?: string;
+  ariaRole?: string;
+  ariaLabel?: string;
 };
 
 export default function Input({
@@ -20,6 +22,8 @@ export default function Input({
   size = 'md',
   extraClasses = '',
   name = label,
+  ariaRole = 'search',
+  ariaLabel = label,
 }: InputProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -41,14 +45,14 @@ export default function Input({
   }
 
   return (
-    <label>
-      <span className="text-xs text-gray-600 font-light">
+    <label role={ariaRole.toLowerCase()} aria-label={ariaLabel}>
+      <span className="text-xs text-gray-700 font-light">
         {label.toUpperCase()}
       </span>
       <input
         type={type}
         name={name}
-        className={`${extraClasses} bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-sm block appearance-none leading-normal`}
+        className={`${extraClasses} bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-sm block appearance-none leading-normal transition duration-200`}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}

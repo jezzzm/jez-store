@@ -19,7 +19,7 @@ export default function Price({ price, onPriceChange }: PriceProps) {
     onPriceChange(event.target.name, Number(event.target.value));
   };
   return (
-    <div className="flex justify-evenly">
+    <div className="flex justify-evenly" aria-label="Product Price Filter">
       <Input
         placeholder="0"
         label="min price"

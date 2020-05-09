@@ -24,7 +24,7 @@ export default function Filters({
   onPriceChange,
 }: FilterProps) {
   return (
-    <div>
+    <div role="form" aria-label="Product Filters">
       <div className="flex justify-between mb-4 items-end">
         <Search onSearchInput={onSearchInput} searchTerm={searchTerm} />
         <Price price={price} onPriceChange={onPriceChange} />
@@ -36,7 +36,11 @@ export default function Filters({
         />
       </div>
 
-      <Tags tags={tags} onToggle={(name: string) => toggleTag(name)} />
+      <Tags
+        tags={tags}
+        onToggle={(name: string) => toggleTag(name)}
+        ariaLabel="Product Tag Filters"
+      />
     </div>
   );
 }

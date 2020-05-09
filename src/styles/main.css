@@ -14337,6 +14337,19 @@ video {
   transition-delay: 1000ms;
 }
 
+.button-outline {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.focus\:button-outline:focus {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.checkbox-ally input[type='checkbox']:focus + label,
+.checkbox-ally input[type='checkbox']:active + label {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;

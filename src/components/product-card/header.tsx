@@ -18,7 +18,7 @@ export default function Header({ price, id, image, name }: HeaderProps) {
           {name}
         </h2>
         <div className="flex justify-between items-center">
-          <p className="font-bold text-md sm:text-lg text-green-600">
+          <p className="font-bold text-md sm:text-lg text-green-700">
             ${price}
           </p>
           <p className="text-sm font-semibold text-gray-700">

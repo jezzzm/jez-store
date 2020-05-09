@@ -23,7 +23,7 @@ export default function Button({
   extraClasses += ' ';
 
   const colourMod = (colour: string) =>
-    `bg-${colour}-600 hover:bg-${colour}-700 `;
+    `bg-${colour}-700 hover:bg-${colour}-800 `;
 
   switch (type) {
     case 'warning':
@@ -57,7 +57,7 @@ export default function Button({
   return (
     <button
       onClick={handleClick}
-      className={`${extraClasses} rounded shadow text-white font-semibold inline-block transition duration-200 whitespace-no-wrap`}
+      className={`${extraClasses} focus:button-outline rounded shadow text-white font-semibold inline-block transition duration-200 whitespace-no-wrap focus:outline-none`}
     >
       {text}
     </button>

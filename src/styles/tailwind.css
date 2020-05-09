@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@variants focus {
+  .button-outline {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+}
+
+.checkbox-ally input[type='checkbox']:focus + label,
+.checkbox-ally input[type='checkbox']:active + label {
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}

@@ -19,7 +19,7 @@ describe('<ProductCard />', () => {
     );
     title = wrapper.getByTestId('product-card-title');
     description = wrapper.getByTestId('description');
-    tagsEl = wrapper.getByTestId('tags');
+    tagsEl = wrapper.getByLabelText('Product Tags');
   });
 
   test('should render title', () => {

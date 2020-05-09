@@ -20,3 +20,9 @@ export const productTagsAsObject = (
   });
   return productTags;
 };
+
+let lastId = 0;
+export const getUniqueId = (prefix = 'id') => {
+  lastId++;
+  return `${prefix}-${lastId}`;
+};

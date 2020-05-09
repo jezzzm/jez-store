@@ -69,7 +69,7 @@ export default function Products({ products }: ProductsProps) {
   };
 
   return (
-    <div className="my-8" data-testid="product-list">
+    <section className="my-8" aria-label="Product List">
       <h1 className="text-5xl mb-4">Products</h1>
       <Filters
         tags={tags.all}
@@ -81,6 +81,6 @@ export default function Products({ products }: ProductsProps) {
         resetFilters={handleResetFilters}
       />
       {renderMatchingProducts()}
-    </div>
+    </section>
   );
 }
