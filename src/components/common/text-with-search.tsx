@@ -1,17 +1,18 @@
 import React, { useRef } from 'react';
-import { TextMatch } from '../../utils/types';
+import useSearchMatchText from '../../hooks/useSearchMatchText';
 
 type TextWithSearchProps = {
-  textGroup: TextMatch[];
+  content: string;
   matchedStyles: string;
   unmatchedStyles?: string;
 };
 export default function TextWithSearch({
-  textGroup,
+  content,
   matchedStyles,
   unmatchedStyles = '',
 }: TextWithSearchProps) {
   const id = useRef('text-with-search');
+  const textGroup = useSearchMatchText(content);
   return (
     <>
       {textGroup.map(({ text, match }) => {

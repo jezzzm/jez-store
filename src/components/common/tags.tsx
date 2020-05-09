@@ -1,13 +1,15 @@
 import React, { useRef } from 'react';
 import { getUniqueId } from '../../utils/utils';
+import TextWithSearch from '../common/text-with-search';
 
 type TagComponentProps = {
   name: string;
   onToggle: CallableFunction;
   checked: boolean;
+  withSearch: boolean;
 };
 
-const Tag = ({ name, onToggle, checked }: TagComponentProps) => {
+const Tag = ({ name, onToggle, checked, withSearch }: TagComponentProps) => {
   const id = useRef(getUniqueId('tag-checkbox'));
   return (
     <div className="checkbox-ally inline-block mr-2 mb-2">
@@ -28,7 +30,12 @@ const Tag = ({ name, onToggle, checked }: TagComponentProps) => {
             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
         } rounded-full px-3 py-1 text-sm font-semibold cursor-pointer transition duration-200`}
       >
-        # {name}
+        #{' '}
+        {withSearch ? (
+          <TextWithSearch content={name} matchedStyles="bg-yellow-400" />
+        ) : (
+          name
+        )}
       </label>
     </div>
   );
@@ -42,12 +49,14 @@ type TagsProps = {
   tags: TagsInterface;
   onToggle: CallableFunction;
   ariaLabel?: string;
+  withSearch?: boolean;
 };
 
 export default function Tags({
   tags,
   onToggle,
   ariaLabel = 'Product Tags',
+  withSearch = false,
 }: TagsProps) {
   const id = useRef(getUniqueId('tag-ref'));
   return (
@@ -58,6 +67,7 @@ export default function Tags({
           onToggle={onToggle}
           checked={checked}
           key={`${id.current}-${name}`}
+          withSearch={withSearch}
         />
       ))}
     </div>

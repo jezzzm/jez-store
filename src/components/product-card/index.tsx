@@ -27,7 +27,7 @@ export default function ProductCard({
     <CardContainer id={id}>
       <Header name={name} image={image} price={price} id={id} />
       <Description content={description} />
-      <Tags tags={tags} onToggle={onToggle} />
+      <Tags tags={tags} onToggle={onToggle} withSearch />
     </CardContainer>
   );
 }

@@ -6,7 +6,7 @@ export default function Search() {
   const [search, setSearch] = useContext(SearchContext);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value.toLowerCase());
+    setSearch(event.target.value);
   };
 
   return (
