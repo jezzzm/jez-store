@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import useSearchMatch from '../../hooks/useSearchMatchText';
+import useUniqueId from '../../hooks/useUniqueId';
 
 type TextWithSearchProps = {
   content: string;
@@ -11,12 +12,12 @@ export default function TextWithSearch({
   matchedStyles,
   unmatchedStyles = '',
 }: TextWithSearchProps) {
-  const id = useRef('text-with-search');
+  const id = useUniqueId('text-with-search');
   const textGroup = useSearchMatch(content);
   return (
     <>
       {textGroup.map(({ text, match }) => {
-        const key = `${id.current}-${text}`;
+        const key = `${id}-${text}`;
         if (match) {
           return (
             <span key={key} className={matchedStyles}>

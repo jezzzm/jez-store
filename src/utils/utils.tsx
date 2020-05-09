@@ -22,12 +22,6 @@ export const productTagsAsObject = (
   return productTags;
 };
 
-let lastId = 0;
-export const getUniqueId = (prefix = 'id') => {
-  lastId++;
-  return `${prefix}-${lastId}`;
-};
-
 export const findTextMatches = (
   content: string,
   search: string,
@@ -38,8 +32,9 @@ export const findTextMatches = (
     return noMatch;
   }
 
-  const lowered = content.toLowerCase();
-  const matchPosition = lowered.indexOf(search);
+  const loweredContent = content.toLowerCase();
+  const loweredSearch = search.toLowerCase();
+  const matchPosition = loweredContent.indexOf(loweredSearch);
 
   if (matchPosition >= 0) {
     const endIndex = matchPosition + search.length;

@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { getUniqueId } from '../../utils/utils';
+import React from 'react';
+import useUniqueId from '../../hooks/useUniqueId';
 import TextWithSearch from '../common/text-with-search';
 
 type TagComponentProps = {
@@ -10,11 +10,11 @@ type TagComponentProps = {
 };
 
 const Tag = ({ name, onToggle, checked, withSearch }: TagComponentProps) => {
-  const id = useRef(getUniqueId('tag-checkbox'));
+  const id = useUniqueId('tag-checkbox');
   return (
     <div className="checkbox-ally inline-block mr-2 mb-2">
       <input
-        id={id.current}
+        id={id}
         className="opacity-0 w-0"
         type="checkbox"
         data-testid="tag"
@@ -23,7 +23,7 @@ const Tag = ({ name, onToggle, checked, withSearch }: TagComponentProps) => {
         readOnly
       />
       <label
-        htmlFor={id.current}
+        htmlFor={id}
         className={`${
           checked
             ? 'bg-gray-800 text-white hover:bg-black '
@@ -58,7 +58,7 @@ export default function Tags({
   ariaLabel = 'Product Tags',
   withSearch = false,
 }: TagsProps) {
-  const id = useRef(getUniqueId('tag-ref'));
+  const id = useUniqueId('tag-ref');
   return (
     <div aria-label={ariaLabel}>
       {Object.entries(tags).map(([name, checked]) => (
@@ -66,7 +66,7 @@ export default function Tags({
           name={name.toLowerCase()}
           onToggle={onToggle}
           checked={checked}
-          key={`${id.current}-${name}`}
+          key={`${id}-${name}`}
           withSearch={withSearch}
         />
       ))}
