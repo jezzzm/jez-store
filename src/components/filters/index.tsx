@@ -7,8 +7,6 @@ import Button from '../common/button';
 type FilterProps = {
   tags: TagsInterface;
   toggleTag: CallableFunction;
-  searchTerm: string;
-  onSearchInput: CallableFunction;
   price: PriceRange;
   onPriceChange: CallableFunction;
   resetFilters: CallableFunction;
@@ -17,16 +15,14 @@ type FilterProps = {
 export default function Filters({
   tags,
   toggleTag,
-  onSearchInput,
   resetFilters,
-  searchTerm,
   price,
   onPriceChange,
 }: FilterProps) {
   return (
     <div role="form" aria-label="Product Filters">
       <div className="flex justify-between mb-4 items-end">
-        <Search onSearchInput={onSearchInput} searchTerm={searchTerm} />
+        <Search />
         <Price price={price} onPriceChange={onPriceChange} />
         <Button
           text="Reset Filters"

@@ -1,20 +1,20 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
+import SearchContext from '../../context/search-context';
 import Input from '../common/input';
 
-type SearchProps = {
-  onSearchInput: CallableFunction;
-  searchTerm: string;
-};
+export default function Search() {
+  const [search, setSearch] = useContext(SearchContext);
 
-export default function Search({ onSearchInput, searchTerm }: SearchProps) {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value.toLowerCase());
+  };
+
   return (
     <Input
       label="Search"
       placeholder="Search products..."
-      onInputChange={(event: ChangeEvent<HTMLInputElement>) =>
-        onSearchInput(event.target.value.toLowerCase())
-      }
-      value={searchTerm}
+      onInputChange={handleInputChange}
+      value={search}
       ariaLabel="Product Keyword Search"
     />
   );

@@ -9,3 +9,8 @@ export interface Product {
   image: string;
   price: string;
 }
+
+export interface TextMatch {
+  text: string;
+  match: boolean;
+}

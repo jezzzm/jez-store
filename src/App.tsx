@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Products from './components/products';
-import faker from 'faker';
-import generateDemoProducts from './fixtures/generate-demo-products';
+import SearchContext from './context/search-context';
+import { Product } from './utils/types';
 
-const numItems = faker.random.number({ min: 5, max: 10 });
-
-function App() {
+function App({ products }: { products: Product[] }) {
+  const searchHook = useState('');
   return (
-    <main className="App container mx-auto px-4 max-w-screen-lg" role="main">
-      <Products products={generateDemoProducts(numItems)} />
-    </main>
+    <SearchContext.Provider value={searchHook}>
+      <main className="App container mx-auto px-4 max-w-screen-lg" role="main">
+        <Products products={products} />
+      </main>
+    </SearchContext.Provider>
   );
 }
 

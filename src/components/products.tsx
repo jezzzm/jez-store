@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ProductCard from './product-card';
 import Filters from './filters';
 import { PriceRange } from './filters/price';
 import { productTagsAsObject } from '../utils/utils';
 import { ExcludesUndefined, Product } from '../utils/types';
 import useSelectedTags from '../hooks/useSelectedTags';
+import SearchContext from '../context/search-context';
 
 type ProductsProps = {
   products: Product[];
@@ -14,8 +15,8 @@ const INITIAL_PRICE: PriceRange = { min: false, max: false };
 
 export default function Products({ products }: ProductsProps) {
   const [tags, toggleTag, resetTagFilters] = useSelectedTags(products);
-  const [search, setSearch] = useState('');
   const [price, setPrice] = useState(INITIAL_PRICE);
+  const [search, setSearch] = useContext(SearchContext);
 
   const handleResetFilters = () => {
     resetTagFilters();
@@ -74,8 +75,6 @@ export default function Products({ products }: ProductsProps) {
       <Filters
         tags={tags.all}
         toggleTag={toggleTag}
-        onSearchInput={setSearch}
-        searchTerm={search}
         price={price}
         onPriceChange={handlePriceChange}
         resetFilters={handleResetFilters}

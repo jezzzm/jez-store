@@ -1,4 +1,6 @@
 import React from 'react';
+import useSearchMatchText from '../../hooks/useSearchMatchText';
+import TextWithSearch from '../common/text-with-search';
 
 type HeaderProps = {
   price: string;
@@ -8,6 +10,8 @@ type HeaderProps = {
 };
 
 export default function Header({ price, id, image, name }: HeaderProps) {
+  const textGroup = useSearchMatchText(name);
+
   return (
     <div className="flex flex-col-reverse justify-between align-top mb-8 sm:flex-row">
       <div className="w-full">
@@ -15,7 +19,7 @@ export default function Header({ price, id, image, name }: HeaderProps) {
           className="font-bold text-2xl sm:text-4xl mb-4"
           data-testid="product-card-title"
         >
-          {name}
+          <TextWithSearch textGroup={textGroup} matchedStyles="bg-yellow-400" />
         </h2>
         <div className="flex justify-between items-center">
           <p className="font-bold text-md sm:text-lg text-green-700">
