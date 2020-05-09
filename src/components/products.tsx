@@ -79,7 +79,7 @@ export default function Products({ products }: ProductsProps) {
         onPriceChange={handlePriceChange}
         resetFilters={handleResetFilters}
       />
-      {renderMatchingProducts()}
+      <div className="my-4">{renderMatchingProducts()}</div>
     </section>
   );
 }

@@ -1,6 +1,9 @@
 ## project for learning:
 
+9th may
+![](github-assets/recording9thmay.gif)
+
 - tailwind css
 - TypeScript
 - testing-library
-- AWS Lambda
+- focus on accessibility
