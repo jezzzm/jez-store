@@ -17,3 +17,8 @@ export interface TextMatch {
 export interface TagsInterface {
   [key: string]: boolean;
 }
+
+export interface FilterTags {
+  all: TagsInterface;
+  selected: string[];
+}

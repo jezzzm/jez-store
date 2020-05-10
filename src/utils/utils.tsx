@@ -1,5 +1,4 @@
-import { Product } from './types';
-import { TextMatch, TagsInterface } from './types';
+import { Product, FilterTags, TextMatch, TagsInterface } from './types';
 
 export const flattenAndSortTags = (products: Product[]) => {
   const flattened = products.flatMap((product) => product.tags);
@@ -59,4 +58,31 @@ export const findTextMatches = (
     // = -1 if no match for substring
     return noMatch;
   }
+};
+
+export const isMatchingProduct = (
+  product: Product,
+  tags: FilterTags,
+  search: string,
+) => {
+  const hasSearchTermEntered = !!search.length;
+  const loweredSearch = search.toLowerCase();
+
+  const hasSelectedTags = tags.selected.every((tagName) =>
+    product.tags.includes(tagName),
+  );
+
+  const noTagFilterOrMatchesTag = hasSelectedTags || !tags.selected.length;
+
+  const hasMatchingSearchTerm =
+    hasSearchTermEntered &&
+    (product.name.toLowerCase().includes(loweredSearch) ||
+      product.description.toLowerCase().includes(loweredSearch) ||
+      product.tags.some((tag) => tag.includes(loweredSearch)));
+
+  const isMatchingProduct = hasSearchTermEntered
+    ? hasMatchingSearchTerm && noTagFilterOrMatchesTag
+    : noTagFilterOrMatchesTag;
+
+  return isMatchingProduct;
 };

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import ProductCard from './product-card';
 import Filters from './filters';
 import { PriceRange } from './filters/price';
-import { productTagsAsObject } from '../utils/utils';
+import { productTagsAsObject, isMatchingProduct } from '../utils/utils';
 import { ExcludesUndefined, Product } from '../utils/types';
 import useSelectedTags from '../hooks/use-selected-tags';
 import SearchContext from '../context/search-context';
@@ -32,28 +32,11 @@ export default function Products({ products }: ProductsProps) {
   };
 
   const renderMatchingProducts = () => {
-    const hasSearchTermEntered = !!search.length;
-
     return products
       .map((product) => {
-        const hasSelectedTags = tags.selected.every((tagName) =>
-          product.tags.includes(tagName),
-        );
+        const match = isMatchingProduct(product, tags, search);
 
-        const noTagFilterOrMatchesTag =
-          hasSelectedTags || !tags.selected.length;
-
-        const hasMatchingSearchTerm =
-          hasSearchTermEntered &&
-          (product.name.toLowerCase().includes(search) ||
-            product.description.toLowerCase().includes(search) ||
-            product.tags.some((tag) => tag.includes(search)));
-
-        const isMatchingProduct = hasSearchTermEntered
-          ? hasMatchingSearchTerm && noTagFilterOrMatchesTag
-          : noTagFilterOrMatchesTag;
-
-        if (isMatchingProduct) {
+        if (match) {
           const productTags = productTagsAsObject(product.tags, tags.all);
           return (
             <ProductCard
