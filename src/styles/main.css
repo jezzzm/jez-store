@@ -14338,16 +14338,28 @@ video {
 }
 
 .button-outline {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 0 0 3px #4299e1;
+}
+
+.input-error {
+  box-shadow: 0 0 0 3px #c53030;
 }
 
 .focus\:button-outline:focus {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 0 0 3px #4299e1;
+}
+
+.focus\:input-error:focus {
+  box-shadow: 0 0 0 3px #c53030;
 }
 
 .checkbox-ally input[type='checkbox']:focus + label,
 .checkbox-ally input[type='checkbox']:active + label {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 0 0 3px #4299e1;
+}
+
+.input-error {
+  box-shadow: 0 0 0 3px #f56565;
 }
 
 @media (min-width: 640px) {

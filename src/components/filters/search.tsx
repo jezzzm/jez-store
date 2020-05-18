@@ -16,6 +16,7 @@ export default function Search() {
       onInputChange={handleInputChange}
       value={search}
       ariaLabel="Product Keyword Search"
+      extraClasses="w-full"
     />
   );
 }

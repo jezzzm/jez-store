@@ -11,7 +11,7 @@ type ProductsProps = {
   products: Product[];
 };
 
-const INITIAL_PRICE: PriceRange = { min: false, max: false };
+const INITIAL_PRICE: PriceRange = { min: 0, max: 0 };
 
 export default function Products({ products }: ProductsProps) {
   const [tags, toggleTag, resetTagFilters] = useSelectedTags(products);

@@ -86,3 +86,15 @@ export const isMatchingProduct = (
 
   return isMatchingProduct;
 };
+
+export const isValidPrice = (
+  value: number,
+  other: number | false,
+  isMin: boolean,
+): boolean => {
+  if (isMin) {
+    return value >= 0 && (!!other ? value <= other : true);
+  } else {
+    return value < 9999999999 && (!!other ? value >= other : true);
+  }
+};

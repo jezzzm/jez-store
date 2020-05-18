@@ -22,3 +22,8 @@ export interface FilterTags {
   all: TagsInterface;
   selected: string[];
 }
+
+export interface PriceError {
+  min: string | null;
+  max: string | null;
+}

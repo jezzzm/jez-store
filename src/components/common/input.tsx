@@ -11,6 +11,7 @@ type InputProps = {
   name?: string;
   ariaRole?: string;
   ariaLabel?: string;
+  hasError?: boolean;
 };
 
 export default function Input({
@@ -24,6 +25,7 @@ export default function Input({
   name = label,
   ariaRole = 'search',
   ariaLabel = label,
+  hasError = false,
 }: InputProps) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -44,8 +46,16 @@ export default function Input({
       extraClasses += 'px-4 py-2 text-sm';
   }
 
+  if (hasError) {
+    extraClasses += ' input-error focus:input-error';
+  }
+
   return (
-    <label role={ariaRole.toLowerCase()} aria-label={ariaLabel}>
+    <label
+      role={ariaRole.toLowerCase()}
+      aria-label={ariaLabel}
+      className="mb-4"
+    >
       <span className="text-xs text-gray-700 font-light">
         {label.toUpperCase()}
       </span>

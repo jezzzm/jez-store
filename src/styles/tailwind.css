@@ -4,11 +4,18 @@
 
 @variants focus {
   .button-outline {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 0 3px theme('colors.blue.500');
+  }
+  .input-error {
+    box-shadow: 0 0 0 3px theme('colors.red.700');
   }
 }
 
 .checkbox-ally input[type='checkbox']:focus + label,
 .checkbox-ally input[type='checkbox']:active + label {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  box-shadow: 0 0 0 3px theme('colors.blue.500');
+}
+
+.input-error {
+  box-shadow: 0 0 0 3px theme('colors.red.500');
 }

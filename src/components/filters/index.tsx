@@ -21,10 +21,8 @@ export default function Filters({
   onPriceChange,
 }: FilterProps) {
   return (
-    <div role="form" aria-label="Product Filters">
-      <div className="flex justify-between mb-4 items-end">
-        <Search />
-        <Price price={price} onPriceChange={onPriceChange} />
+    <div role="form" aria-label="Product Filters" className="flex flex-col">
+      <div className="self-end">
         <Button
           text="Reset Filters"
           type="info"
@@ -32,6 +30,9 @@ export default function Filters({
           onClick={resetFilters}
         />
       </div>
+
+      <Search />
+      <Price price={price} onPriceChange={onPriceChange} />
 
       <Tags
         tags={tags}
