@@ -1,4 +1,11 @@
-import { Product, FilterTags, TextMatch, TagsInterface } from './types';
+import {
+  Product,
+  FilterTags,
+  TextMatch,
+  TagsInterface,
+  PriceError,
+  PriceRange,
+} from './types';
 
 export const flattenAndSortTags = (products: Product[]) => {
   const flattened = products.flatMap((product) => product.tags);
@@ -64,37 +71,48 @@ export const isMatchingProduct = (
   product: Product,
   tags: FilterTags,
   search: string,
+  price: PriceRange,
+  priceErrors: PriceError,
 ) => {
-  const hasSearchTermEntered = !!search.length;
-  const loweredSearch = search.toLowerCase();
-
+  // tags
   const hasSelectedTags = tags.selected.every((tagName) =>
     product.tags.includes(tagName),
   );
+  const isTagMatch = hasSelectedTags || !tags.selected.length;
 
-  const noTagFilterOrMatchesTag = hasSelectedTags || !tags.selected.length;
-
-  const hasMatchingSearchTerm =
-    hasSearchTermEntered &&
-    (product.name.toLowerCase().includes(loweredSearch) ||
+  //search
+  const loweredSearch = search.toLowerCase();
+  const isSearchMatch = !!search.length
+    ? product.name.toLowerCase().includes(loweredSearch) ||
       product.description.toLowerCase().includes(loweredSearch) ||
-      product.tags.some((tag) => tag.includes(loweredSearch)));
+      product.tags.some((tag) => tag.includes(loweredSearch))
+    : true;
 
-  const isMatchingProduct = hasSearchTermEntered
-    ? hasMatchingSearchTerm && noTagFilterOrMatchesTag
-    : noTagFilterOrMatchesTag;
+  // price
+  let isPriceMatch = true;
+  if (!(priceErrors.min.length || priceErrors.max.length)) {
+    const productPrice = Number(product.price);
+    if (price.max) {
+      isPriceMatch = price.min <= productPrice && price.max >= productPrice;
+    } else {
+      isPriceMatch = price.min <= productPrice;
+    }
+  }
 
-  return isMatchingProduct;
+  return isTagMatch && isSearchMatch && isPriceMatch;
 };
 
-export const isValidPrice = (
-  value: number,
-  other: number | false,
-  isMin: boolean,
-): boolean => {
-  if (isMin) {
-    return value >= 0 && (!!other ? value <= other : true);
-  } else {
-    return value < 9999999999 && (!!other ? value >= other : true);
+export const checkPriceForErrors = (min: number, max: number): PriceError => {
+  let errors: PriceError = { min: [], max: [] };
+  if (min < 0) {
+    errors.min.push('Min price cannot be less than zero');
   }
+  if (max < 0) {
+    errors.max.push('Max price cannot be less than zero');
+  }
+  if (max < min && max !== 0) {
+    errors.min.push('Min price cannot be greater than max price');
+    errors.max.push('Max price cannot be less than min price');
+  }
+  return errors;
 };

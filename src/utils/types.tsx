@@ -24,6 +24,18 @@ export interface FilterTags {
 }
 
 export interface PriceError {
-  min: string | null;
-  max: string | null;
+  min: (string | undefined)[];
+  max: (string | undefined)[];
+}
+
+export interface PriceRange {
+  min: number;
+  max: number;
+}
+
+export interface PriceProps {
+  price: PriceRange;
+  onPriceChange: CallableFunction;
+  priceErrors: PriceError;
+  resetPrice?: CallableFunction;
 }
