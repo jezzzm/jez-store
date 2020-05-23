@@ -1,11 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import ProductCard from './product-card';
 import Filters from './filters';
 import { PriceRange } from './filters/price';
 import { productTagsAsObject, isMatchingProduct } from '../utils/utils';
 import { ExcludesUndefined, Product } from '../utils/types';
 import useSelectedTags from '../hooks/use-selected-tags';
-import SearchContext from '../context/search-context';
+import searchState from '../recoil/search-state';
 
 type ProductsProps = {
   products: Product[];
@@ -16,7 +17,7 @@ const INITIAL_PRICE: PriceRange = { min: 0, max: 0 };
 export default function Products({ products }: ProductsProps) {
   const [tags, toggleTag, resetTagFilters] = useSelectedTags(products);
   const [price, setPrice] = useState(INITIAL_PRICE);
-  const [search, setSearch] = useContext(SearchContext);
+  const [search, setSearch] = useRecoilState(searchState);
 
   const handleResetFilters = () => {
     resetTagFilters();

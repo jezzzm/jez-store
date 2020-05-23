@@ -54,7 +54,7 @@ export default function Input({
     <label
       role={ariaRole.toLowerCase()}
       aria-label={ariaLabel}
-      className="mb-4"
+      className=" mb-4"
     >
       <span className="text-xs text-gray-700 font-light">
         {label.toUpperCase()}
