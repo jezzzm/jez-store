@@ -35,7 +35,7 @@ export default function Products({ products }: ProductsProps) {
           isMatchingProduct(product, tags, search, price, priceErrors),
         ),
       );
-    }, 400);
+    }, 400); // 400ms debounce before updating ui with filter-matched products
   }, [tags, price, search, priceErrors, products]);
 
   return (
