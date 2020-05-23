@@ -1,9 +1,9 @@
 import React from 'react';
 import Search from './search';
-import Price, { PriceRange } from './price';
+import Price from './price';
 import Tags from '../common/tags';
 import Button from '../common/button';
-import { TagsInterface } from '../../utils/types';
+import { TagsInterface, PriceError, PriceRange } from '../../utils/types';
 
 type FilterProps = {
   tags: TagsInterface;
@@ -11,6 +11,7 @@ type FilterProps = {
   price: PriceRange;
   onPriceChange: CallableFunction;
   resetFilters: CallableFunction;
+  priceErrors: PriceError;
 };
 
 export default function Filters({
@@ -19,6 +20,7 @@ export default function Filters({
   resetFilters,
   price,
   onPriceChange,
+  priceErrors,
 }: FilterProps) {
   return (
     <div role="form" aria-label="Product Filters" className="flex flex-col">
@@ -32,8 +34,11 @@ export default function Filters({
       </div>
 
       <Search />
-      <Price price={price} onPriceChange={onPriceChange} />
-
+      <Price
+        price={price}
+        onPriceChange={onPriceChange}
+        priceErrors={priceErrors}
+      />
       <Tags
         tags={tags}
         onToggle={(name: string) => toggleTag(name)}

@@ -1,57 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import searchState from '../recoil/search-state';
 import ProductCard from './product-card';
 import Filters from './filters';
-import { PriceRange } from './filters/price';
 import { productTagsAsObject, isMatchingProduct } from '../utils/utils';
-import { ExcludesUndefined, Product } from '../utils/types';
+import { Product } from '../utils/types';
 import useSelectedTags from '../hooks/use-selected-tags';
-import searchState from '../recoil/search-state';
+import usePriceFilter from '../hooks/use-price-filter';
 
 type ProductsProps = {
   products: Product[];
 };
 
-const INITIAL_PRICE: PriceRange = { min: 0, max: 0 };
+let inputTimer: null | NodeJS.Timeout = null;
 
 export default function Products({ products }: ProductsProps) {
   const [tags, toggleTag, resetTagFilters] = useSelectedTags(products);
-  const [price, setPrice] = useState(INITIAL_PRICE);
+  const { price, onPriceChange, priceErrors, resetPrice } = usePriceFilter();
   const [search, setSearch] = useRecoilState(searchState);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   const handleResetFilters = () => {
     resetTagFilters();
     setSearch('');
-    setPrice(INITIAL_PRICE);
+    resetPrice?.();
   };
 
-  const handlePriceChange = (name: string, newPrice: number) => {
-    setPrice((oldPrice) => ({
-      ...oldPrice,
-      [name]: newPrice,
-    }));
-  };
+  useEffect(() => {
+    inputTimer && clearTimeout(inputTimer);
 
-  const renderMatchingProducts = () => {
-    return products
-      .map((product) => {
-        const match = isMatchingProduct(product, tags, search);
-
-        if (match) {
-          const productTags = productTagsAsObject(product.tags, tags.all);
-          return (
-            <ProductCard
-              {...product}
-              tags={productTags}
-              key={`${product.id}-${product.name}`}
-              onToggle={(name: string) => toggleTag(name)}
-            />
-          );
-        }
-        return undefined;
-      })
-      .filter((Boolean as any) as ExcludesUndefined);
-  };
+    inputTimer = setTimeout(() => {
+      setFilteredProducts(
+        products.filter((product) =>
+          isMatchingProduct(product, tags, search, price, priceErrors),
+        ),
+      );
+    }, 400); // 400ms debounce before updating ui with filter-matched products
+  }, [tags, price, search, priceErrors, products]);
 
   return (
     <section className="my-8" aria-label="Product List">
@@ -60,10 +45,20 @@ export default function Products({ products }: ProductsProps) {
         tags={tags.all}
         toggleTag={toggleTag}
         price={price}
-        onPriceChange={handlePriceChange}
+        onPriceChange={onPriceChange}
         resetFilters={handleResetFilters}
+        priceErrors={priceErrors}
       />
-      <div className="my-4">{renderMatchingProducts()}</div>
+      <div className="my-4">
+        {filteredProducts.map((product) => (
+          <ProductCard
+            {...product}
+            tags={productTagsAsObject(product.tags, tags.all)}
+            key={`${product.id}-${product.name}`}
+            onToggle={(name: string) => toggleTag(name)}
+          />
+        ))}
+      </div>
     </section>
   );
 }
