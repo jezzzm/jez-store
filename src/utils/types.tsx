@@ -15,13 +15,13 @@ export interface TextMatch {
   match: boolean;
 }
 export interface TagsInterface {
-  [key: string]: boolean;
+  [key: string]: {
+    selected: boolean;
+    count: number;
+  };
 }
 
-export interface FilterTags {
-  all: TagsInterface;
-  selected: string[];
-}
+export type TagAsArray = [string, { selected: boolean; count: number }];
 
 export interface PriceError {
   min: (string | undefined)[];

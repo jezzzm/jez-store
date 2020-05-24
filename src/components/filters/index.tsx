@@ -3,11 +3,10 @@ import Search from './search';
 import Price from './price';
 import Tags from '../common/tags';
 import Button from '../common/button';
-import { TagsInterface, PriceError, PriceRange } from '../../utils/types';
+import { PriceError, PriceRange } from '../../utils/types';
+import useSelectedTags from '../../hooks/use-selected-tags';
 
 type FilterProps = {
-  tags: TagsInterface;
-  toggleTag: CallableFunction;
   price: PriceRange;
   onPriceChange: CallableFunction;
   resetFilters: CallableFunction;
@@ -15,13 +14,12 @@ type FilterProps = {
 };
 
 export default function Filters({
-  tags,
-  toggleTag,
   resetFilters,
   price,
   onPriceChange,
   priceErrors,
 }: FilterProps) {
+  const [tags, toggleTag] = useSelectedTags();
   return (
     <div role="form" aria-label="Product Filters" className="flex flex-col">
       <div className="self-end">

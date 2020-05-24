@@ -1,28 +1,31 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import Tags from '../common/tags';
 import Description from './description';
 import Header from './header';
 import CardContainer from './card-container';
+import { productTagsAsObject } from '../../utils/tags';
+import tagState from '../../recoil/tag-state';
 import { TagsInterface } from '../../utils/types';
 
 type ProductCardProps = {
   name: string;
   description: string;
   tags: TagsInterface;
-  onToggle: CallableFunction;
   id: number;
   image: string;
   price: string;
+  onToggle: CallableFunction;
 };
 
 export default function ProductCard({
   name,
   description,
   tags,
-  onToggle,
   id,
   image,
   price,
+  onToggle,
 }: ProductCardProps) {
   return (
     <CardContainer id={id}>

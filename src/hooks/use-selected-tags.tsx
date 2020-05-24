@@ -1,39 +1,35 @@
-import { useState } from 'react';
-import { flattenAndSortTags } from '../utils/utils';
-import { ExcludesUndefined, Product, TagsInterface } from '../utils/types';
+import { useRecoilState } from 'recoil';
+import tagState from '../recoil/tag-state';
+import { getTagsFromProducts } from '../utils/tags';
+import { Product, TagsInterface, TagAsArray } from '../utils/types';
+import { useState, useEffect } from 'react';
 
-export default function useSelectedTags(products: Product[]) {
-  const flattenedTags: string[] = flattenAndSortTags(products);
-  const INITIAL_STATE = flattenedTags.reduce((acc: TagsInterface, tag) => {
-    acc[tag] = false;
-    return acc;
-  }, {});
-
-  const [allTags, setTags] = useState(INITIAL_STATE);
-
+export default function useSelectedTags() {
+  const [all, setAll] = useRecoilState(tagState);
+  const [selected, setSelected] = useState<(string | undefined)[]>([]);
   const toggleTag = (name: string): void => {
-    setTags((oldTags) => ({
-      ...oldTags,
-      [name]: !oldTags[name],
-    }));
+    setAll({
+      ...all,
+      [name]: {
+        count: all[name]?.count,
+        selected: !all[name]?.selected,
+      },
+    });
   };
 
-  const resetTagFilters = (): void => {
-    setTags(INITIAL_STATE);
+  const resetTagFilters = (products: Product[]): void => {
+    setAll(getTagsFromProducts(products));
   };
 
-  const selectedTags: string[] = Object.entries(allTags)
-    .map(([tag, selected]) => {
-      if (selected) {
-        return tag;
-      }
-      return undefined;
-    })
-    .filter((Boolean as any) as ExcludesUndefined);
+  useEffect(() => {
+    const tagsArray: TagAsArray[] = Object.entries(all);
 
-  return [
-    { all: allTags, selected: selectedTags },
-    toggleTag,
-    resetTagFilters,
-  ] as const;
+    const newSelected = tagsArray
+      .filter(([_, { selected }]) => selected)
+      .map(([tag]) => tag);
+
+    setSelected(newSelected);
+  }, [all]);
+
+  return [all, toggleTag, selected, resetTagFilters] as const;
 }

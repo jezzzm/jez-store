@@ -3,7 +3,8 @@ import { useRecoilState } from 'recoil';
 import searchState from '../recoil/search-state';
 import ProductCard from './product-card';
 import Filters from './filters';
-import { productTagsAsObject, isMatchingProduct } from '../utils/utils';
+import { isMatchingProduct } from '../utils/utils';
+import { productTagsAsObject } from '../utils/tags';
 import { Product } from '../utils/types';
 import useSelectedTags from '../hooks/use-selected-tags';
 import usePriceFilter from '../hooks/use-price-filter';
@@ -15,13 +16,13 @@ type ProductsProps = {
 let inputTimer: null | NodeJS.Timeout = null;
 
 export default function Products({ products }: ProductsProps) {
-  const [tags, toggleTag, resetTagFilters] = useSelectedTags(products);
-  const { price, onPriceChange, priceErrors, resetPrice } = usePriceFilter();
+  const [allTags, toggleTag, selectedTags, resetTagFilters] = useSelectedTags();
+  const [price, onPriceChange, priceErrors, resetPrice] = usePriceFilter();
   const [search, setSearch] = useRecoilState(searchState);
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   const handleResetFilters = () => {
-    resetTagFilters();
+    resetTagFilters(products);
     setSearch('');
     resetPrice?.();
   };
@@ -32,18 +33,20 @@ export default function Products({ products }: ProductsProps) {
     inputTimer = setTimeout(() => {
       setFilteredProducts(
         products.filter((product) =>
-          isMatchingProduct(product, tags, search, price, priceErrors),
+          isMatchingProduct(product, selectedTags, search, price, priceErrors),
         ),
       );
     }, 400); // 400ms debounce before updating ui with filter-matched products
-  }, [tags, price, search, priceErrors, products]);
+  }, [selectedTags, price, search, priceErrors, products]);
+
+  useEffect(() => {
+    resetTagFilters(products);
+  }, []);
 
   return (
     <section className="my-8" aria-label="Product List">
       <h1 className="text-5xl mb-4">Products</h1>
       <Filters
-        tags={tags.all}
-        toggleTag={toggleTag}
         price={price}
         onPriceChange={onPriceChange}
         resetFilters={handleResetFilters}
@@ -53,9 +56,9 @@ export default function Products({ products }: ProductsProps) {
         {filteredProducts.map((product) => (
           <ProductCard
             {...product}
-            tags={productTagsAsObject(product.tags, tags.all)}
+            tags={productTagsAsObject(product.tags, allTags)}
+            onToggle={toggleTag}
             key={`${product.id}-${product.name}`}
-            onToggle={(name: string) => toggleTag(name)}
           />
         ))}
       </div>
