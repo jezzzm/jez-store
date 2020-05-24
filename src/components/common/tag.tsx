@@ -4,13 +4,22 @@ import TextWithSearch from '../common/text-with-search';
 
 type TagProps = {
   name: string;
+  count: number;
   onToggle: CallableFunction;
   checked: boolean;
   withSearch: boolean;
 };
 
-export default function Tag({ name, onToggle, checked, withSearch }: TagProps) {
+export default function Tag({
+  name,
+  count,
+  onToggle,
+  checked,
+  withSearch,
+}: TagProps) {
   const id = useUniqueId('tag-checkbox');
+  const formattedName = `${name} (${count})`;
+
   return (
     <div className="checkbox-ally inline-block mr-2 mb-2">
       <input
@@ -19,7 +28,7 @@ export default function Tag({ name, onToggle, checked, withSearch }: TagProps) {
         type="checkbox"
         data-testid="tag"
         onClick={() => onToggle(name)}
-        checked={checked}
+        defaultChecked={checked}
         readOnly
       />
       <label
@@ -34,7 +43,7 @@ export default function Tag({ name, onToggle, checked, withSearch }: TagProps) {
         {withSearch ? (
           <TextWithSearch content={name} matchedStyles="bg-yellow-400" />
         ) : (
-          name
+          formattedName
         )}
       </label>
     </div>

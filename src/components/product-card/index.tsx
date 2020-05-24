@@ -9,20 +9,20 @@ type ProductCardProps = {
   name: string;
   description: string;
   tags: TagsInterface;
-  onToggle: CallableFunction;
   id: number;
   image: string;
   price: string;
+  onToggle: CallableFunction;
 };
 
 export default function ProductCard({
   name,
   description,
   tags,
-  onToggle,
   id,
   image,
   price,
+  onToggle,
 }: ProductCardProps) {
   return (
     <CardContainer id={id}>

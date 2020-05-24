@@ -1,31 +1,4 @@
-import {
-  Product,
-  FilterTags,
-  TextMatch,
-  TagsInterface,
-  PriceError,
-  PriceRange,
-} from './types';
-
-export const flattenAndSortTags = (products: Product[]) => {
-  const flattened = products.flatMap((product) => product.tags);
-
-  return Array.from(new Set(flattened))
-    .sort()
-    .map((tag) => tag.toLowerCase());
-};
-
-export const productTagsAsObject = (
-  ownTags: string[],
-  allTags: TagsInterface,
-) => {
-  let productTags: TagsInterface = {};
-  let sorted = [...ownTags.sort()];
-  sorted.forEach((tag) => {
-    productTags[tag] = allTags[tag];
-  });
-  return productTags;
-};
+import { Product, TextMatch, PriceError, PriceRange } from './types';
 
 export const findTextMatches = (
   content: string,
@@ -69,16 +42,16 @@ export const findTextMatches = (
 
 export const isMatchingProduct = (
   product: Product,
-  tags: FilterTags,
+  selectedTags: (string | undefined)[],
   search: string,
   price: PriceRange,
   priceErrors: PriceError,
 ) => {
   // tags
-  const hasSelectedTags = tags.selected.every((tagName) =>
-    product.tags.includes(tagName),
+  const hasSelectedTags = selectedTags.every(
+    (tagName) => tagName && product.tags.includes(tagName),
   );
-  const isTagMatch = hasSelectedTags || !tags.selected.length;
+  const isTagMatch = hasSelectedTags || !selectedTags.length;
 
   //search
   const loweredSearch = search.toLowerCase();
@@ -102,7 +75,7 @@ export const isMatchingProduct = (
   return isTagMatch && isSearchMatch && isPriceMatch;
 };
 
-export const checkPriceForErrors = (min: number, max: number): PriceError => {
+export const checkPriceForErrors = ({ min, max }: PriceRange): PriceError => {
   let errors: PriceError = { min: [], max: [] };
   if (min < 0) {
     errors.min.push('Min price cannot be less than zero');

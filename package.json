@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "postcss-cli": "^7.1.1",
+    "recoil-logger": "^0.3.0",
     "tailwindcss": "^1.4.4"
   }
 }

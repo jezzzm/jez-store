@@ -64,7 +64,7 @@ export default function Input({
         name={name}
         className={`${extraClasses} bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-sm block appearance-none leading-normal transition duration-200`}
         placeholder={placeholder}
-        value={value}
+        defaultValue={value}
         onChange={handleChange}
       />
     </label>

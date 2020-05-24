@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { checkPriceForErrors } from '../utils/utils';
-import { PriceError, PriceProps, PriceRange } from '../utils/types';
+import { PriceError, PriceRange } from '../utils/types';
 
 const INITIAL_PRICE: PriceRange = { min: 0, max: 0 };
 const INITIAL_PRICE_ERRORS: PriceError = { min: [], max: [] };
 
-export default function usePriceFilter(): PriceProps {
+export default function usePriceFilter() {
   const [price, setPrice] = useState(INITIAL_PRICE);
   const [priceErrors, setPriceErrors] = useState(INITIAL_PRICE_ERRORS);
 
   useEffect(() => {
-    const newErrors = checkPriceForErrors(price.min, price.max);
+    const newErrors = checkPriceForErrors(price);
 
     setPriceErrors(newErrors);
   }, [price]);
@@ -27,5 +27,5 @@ export default function usePriceFilter(): PriceProps {
     }));
   };
 
-  return { price, onPriceChange, priceErrors, resetPrice };
+  return [price, onPriceChange, priceErrors, resetPrice] as const;
 }

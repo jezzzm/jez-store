@@ -17,13 +17,15 @@ export default function Tags({
   withSearch = false,
 }: TagsProps) {
   const id = useUniqueId('tag-ref');
+
   return (
     <div aria-label={ariaLabel}>
-      {Object.entries(tags).map(([name, checked]) => (
+      {Object.entries(tags).map(([name, { selected, count }]) => (
         <Tag
           name={name.toLowerCase()}
+          count={count}
           onToggle={onToggle}
-          checked={checked}
+          checked={selected}
           key={`${id}-${name}`}
           withSearch={withSearch}
         />
