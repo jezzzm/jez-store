@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { checkPriceForErrors } from '../utils/utils';
-import { PriceError, PriceProps, PriceRange } from '../utils/types';
+import { PriceError, PriceRange } from '../utils/types';
 
 const INITIAL_PRICE: PriceRange = { min: 0, max: 0 };
 const INITIAL_PRICE_ERRORS: PriceError = { min: [], max: [] };

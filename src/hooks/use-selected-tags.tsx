@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import tagState from '../recoil/tag-state';
 import { getTagsFromProducts } from '../utils/tags';
-import { Product, TagsInterface, TagAsArray } from '../utils/types';
+import { Product, TagAsArray } from '../utils/types';
 import { useState, useEffect } from 'react';
 
 export default function useSelectedTags() {

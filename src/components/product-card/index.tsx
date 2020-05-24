@@ -1,11 +1,8 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 import Tags from '../common/tags';
 import Description from './description';
 import Header from './header';
 import CardContainer from './card-container';
-import { productTagsAsObject } from '../../utils/tags';
-import tagState from '../../recoil/tag-state';
 import { TagsInterface } from '../../utils/types';
 
 type ProductCardProps = {
