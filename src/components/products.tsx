@@ -41,7 +41,7 @@ export default function Products({ products }: ProductsProps) {
 
   useEffect(() => {
     resetTagFilters(products);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section className="my-8" aria-label="Product List">
