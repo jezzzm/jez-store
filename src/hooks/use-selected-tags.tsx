@@ -1,11 +1,11 @@
 import { useRecoilState } from 'recoil';
 import tagState from '../recoil/tag-state';
 import { getTagsFromProducts } from '../utils/tags';
-import { Product, TagAsArray } from '../utils/types';
+import { Product, TagAsArray, TagsInterface } from '../utils/types';
 import { useState, useEffect } from 'react';
 
 export default function useSelectedTags() {
-  const [all, setAll] = useRecoilState(tagState);
+  const [all, setAll] = useRecoilState<TagsInterface>(tagState);
   const [selected, setSelected] = useState<(string | undefined)[]>([]);
   const toggleTag = (name: string): void => {
     setAll({
