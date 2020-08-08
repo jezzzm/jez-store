@@ -2,10 +2,7 @@ import { atom } from 'recoil';
 
 const tagState = atom({
   key: 'tagState',
-  default: [],
-  persistence_UNSTABLE: {
-    type: 'log',
-  },
+  default: {},
 });
 
 export default tagState;
