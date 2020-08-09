@@ -12,7 +12,6 @@ type TagsProps = {
 
 export default function Tags({
   tags,
-  onToggle,
   ariaLabel = 'Product Tags',
   withSearch = false,
 }: TagsProps) {
@@ -20,12 +19,10 @@ export default function Tags({
 
   return (
     <div aria-label={ariaLabel}>
-      {Object.entries(tags).map(([name, { selected, count }]) => (
+      {Object.entries(tags).map(([name, count]) => (
         <Tag
           name={name.toLowerCase()}
           count={count}
-          onToggle={onToggle}
-          checked={selected}
           key={`${id}-${name}`}
           withSearch={withSearch}
         />

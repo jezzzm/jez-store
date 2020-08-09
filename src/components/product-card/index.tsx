@@ -8,7 +8,7 @@ import { TagsInterface } from '../../utils/types';
 type ProductCardProps = {
   name: string;
   description: string;
-  tags: TagsInterface;
+  tags: string[];
   id: number;
   image: string;
   price: string;

@@ -5,18 +5,11 @@ import TextWithSearch from '../common/text-with-search';
 type TagProps = {
   name: string;
   count: number;
-  onToggle: CallableFunction;
-  checked: boolean;
   withSearch: boolean;
 };
 
-export default function Tag({
-  name,
-  count,
-  onToggle,
-  checked,
-  withSearch,
-}: TagProps) {
+export default function Tag({ name, count, withSearch }: TagProps) {
+  const [];
   const id = useUniqueId('tag-checkbox');
   const formattedName = `${name} (${count})`;
 

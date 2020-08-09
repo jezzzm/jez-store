@@ -1,8 +1,20 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
-const tagState = atom({
-  key: 'tagState',
-  default: {},
+const selectedTagState = atom({
+  key: 'selectedTagState',
+  default: [],
 });
 
-export default tagState;
+export const toggleSelectedTag = selector({
+  key: 'toggleSelectedTag',
+  set: ({ get, set }, name) => {
+    const oldSelected = get(selectedTagState);
+    const index = oldSelected.indexOf(name);
+    const newSelected =
+      index > -1 ? oldSelected.splice(index, 1) : [...oldSelected, name];
+
+    return set(selectedTagState, newSelected);
+  },
+});
+
+export default selectedTagState;

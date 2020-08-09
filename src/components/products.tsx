@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import searchState from '../recoil/search-state';
 import ProductCard from './product-card';
 import Filters from './filters';
 import { isMatchingProduct } from '../utils/utils';
 import { productTagsAsObject } from '../utils/tags';
-import { Product } from '../utils/types';
 import useSelectedTags from '../hooks/use-selected-tags';
 import usePriceFilter from '../hooks/use-price-filter';
-
-type ProductsProps = {
-  products: Product[];
-};
+import productsState from '../recoil/products-state';
 
 let inputTimer: null | NodeJS.Timeout = null;
 
-export default function Products({ products }: ProductsProps) {
+export default function Products() {
+  const products = useRecoilValue(productsState);
   const [allTags, toggleTag, selectedTags, resetTagFilters] = useSelectedTags();
   const [price, onPriceChange, priceErrors, resetPrice] = usePriceFilter();
   const [search, setSearch] = useRecoilState(searchState);
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState(() => products);
 
   const handleResetFilters = () => {
-    resetTagFilters(products);
+    resetTagFilters();
     setSearch('');
     resetPrice?.();
   };
@@ -39,11 +36,7 @@ export default function Products({ products }: ProductsProps) {
     }, 400); // 400ms debounce before updating ui with filter-matched products
   }, [selectedTags, price, search, priceErrors, products]);
 
-  useEffect(() => {
-    resetTagFilters(products);
-
-    // we only want this to run on component mount
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  console.log(products);
 
   return (
     <section className="my-8" aria-label="Product List">
@@ -54,14 +47,10 @@ export default function Products({ products }: ProductsProps) {
         resetFilters={handleResetFilters}
         priceErrors={priceErrors}
       />
+      <p>{`Showing ${filteredProducts.length} of ${products.length} products`}</p>
       <div className="my-4">
         {filteredProducts.map((product) => (
-          <ProductCard
-            {...product}
-            tags={productTagsAsObject(product.tags, allTags)}
-            onToggle={toggleTag}
-            key={`${product.id}-${product.name}`}
-          />
+          <ProductCard {...product} key={`${product.id}-${product.name}`} />
         ))}
       </div>
     </section>

@@ -1,35 +1,37 @@
-import { useRecoilState } from 'recoil';
-import tagState from '../recoil/tag-state';
-import { getTagsFromProducts } from '../utils/tags';
-import { Product, TagAsArray, TagsInterface } from '../utils/types';
 import { useState, useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import tagState from '../recoil/tag-state';
+import productsState, { productTags } from '../recoil/products-state';
+import { getTagsFromProducts } from '../utils/tags';
+import { TagAsArray, TagsInterface } from '../utils/types';
 
 export default function useSelectedTags() {
-  const [all, setAll] = useRecoilState<TagsInterface>(tagState);
+  const products = useRecoilValue(productsState);
+  const tags = useRecoilValue(productTags);
   const [selected, setSelected] = useState<(string | undefined)[]>([]);
-  const toggleTag = (name: string): void => {
-    setAll({
-      ...all,
-      [name]: {
-        count: all[name]?.count,
-        selected: !all[name]?.selected,
-      },
-    });
+
+  const toggle = (name: string): void => {
+    const index = selected.indexOf(name);
+    if (index > -1) {
+      setSelected((old) => old.splice(index, 1));
+    } else {
+      setSelected((old) => [...old, name]);
+    }
   };
 
-  const resetTagFilters = (products: Product[]): void => {
-    setAll(getTagsFromProducts(products));
+  const reset = (): void => {
+    setSelected([]);
   };
 
-  useEffect(() => {
-    const tagsArray: TagAsArray[] = Object.entries(all);
+  // useEffect(() => {
+  //   const tagsArray: TagAsArray[] = Object.entries(all);
 
-    const newSelected = tagsArray
-      .filter(([_, { selected }]) => selected)
-      .map(([tag]) => tag);
+  //   const newSelected = tagsArray
+  //     .filter(([_, { selected }]) => selected)
+  //     .map(([tag]) => tag);
 
-    setSelected(newSelected);
-  }, [all]);
+  //   setSelected(newSelected);
+  // }, [all]);
 
-  return [all, toggleTag, selected, resetTagFilters] as const;
+  return [selected, toggle, reset] as const;
 }

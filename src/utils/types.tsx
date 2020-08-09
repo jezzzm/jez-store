@@ -15,10 +15,7 @@ export interface TextMatch {
   match: boolean;
 }
 export interface TagsInterface {
-  [key: string]: {
-    selected: boolean;
-    count: number;
-  };
+  [key: string]: number;
 }
 
 export type TagAsArray = [string, { selected: boolean; count: number }];
